@@ -51,7 +51,7 @@ public:
 
 	virtual std::ostream& print(std::ostream& os) const;
 };
-std::ostream& operator<<(std::ostream os, const Student& obj);
+std::ostream& operator<<(std::ostream& os, const Student& obj);
 
 
 #define TEACHER_TAKE_PARAMETERS const std::string& speciality, int experience
@@ -69,7 +69,7 @@ public:
 
 	virtual std::ostream& print(std::ostream& os) const;
 };
-std::ostream& operator<<(std::ostream os, const Teacher& obj);
+std::ostream& operator<<(std::ostream& os, const Teacher& obj);
 
 
 class Graduate :public Student
@@ -83,6 +83,6 @@ public:
 	~Graduate();
 	virtual std::ostream& print(std::ostream& os) const;
 };
-std::ostream& operator<<(std::ostream os, const Graduate& obj);
+std::ostream& operator<<(std::ostream& os, const Graduate& obj);
 
 void print(Human* group[], const int n);

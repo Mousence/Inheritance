@@ -61,7 +61,7 @@
 	void Student::set_attendance(double attendance) {
 		this->attendance = attendance;
 	}
-	std::ostream& operator<<(std::ostream os, const Student& obj) {
+	std::ostream& operator<<(std::ostream& os, const Student& obj) {
 		return obj.print(os);
 	}
 
@@ -103,7 +103,7 @@
 	std::ostream& Teacher::print(std::ostream& os) const {
 		return Human::print(os) << speciality << " " << experience << " years";
 	}
-	std::ostream& operator<<(std::ostream os, const Teacher& obj) {
+	std::ostream& operator<<(std::ostream& os, const Teacher& obj) {
 		return obj.print(os);
 	}
 
@@ -127,7 +127,7 @@
 	std::ostream& Graduate::print(std::ostream& os) const {
 		return Student::print(os) << " " << subject;
 	}
-	std::ostream& operator<<(std::ostream os, const Graduate& obj) {
+	std::ostream& operator<<(std::ostream& os, const Graduate& obj) {
 		return obj.print(os);
 	}
 
@@ -136,11 +136,11 @@
 		cout << delimiter << endl;
 		for (int i = 0; i < n; i++)
 		{
-			cout << typeid(*group[i]).name() << endl;
-			if (typeid(*group[i]) == typeid(Student)) cout << dynamic_cast<Student*>(group[i]) << endl;
-			if (typeid(*group[i]) == typeid(Graduate)) cout << dynamic_cast<Graduate*>(group[i]) << endl;
-			if (typeid(*group[i]) == typeid(Teacher)) cout << dynamic_cast<Teacher*>(group[i]) << endl;
-			cout << group[i] << endl;
+			cout << typeid(*group[i]).name() << ":\t";
+			if (typeid(*group[i]) == typeid(Student))	cout << *dynamic_cast<Student*>(group[i]) << endl;
+			if (typeid(*group[i]) == typeid(Graduate))	cout << *dynamic_cast<Graduate*>(group[i]) << endl;
+			if (typeid(*group[i]) == typeid(Teacher))	cout << *dynamic_cast<Teacher*>(group[i]) << endl;
+			//cout << group[i] << endl;
 			cout << delimiter << endl;
 		}
 	}
