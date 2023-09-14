@@ -29,10 +29,13 @@
 	Human::~Human() {
 		cout << "HDestructor:\t" << this << endl;
 	}
-	void Human::print()const {
-		cout << last_name << " " << first_name << " " << age << " y/o\n";
+	std::ostream& Human::print(std::ostream& os) const {
+		return os << last_name << " " << first_name << " " << age << " y/o";
 	}
 
+	std::ostream& operator<<(std::ostream os, const Human& obj) {
+		return obj.print(os);
+	}
 	
 	const std::string& Student::get_speciality()const {
 		return speciality;
@@ -58,6 +61,10 @@
 	void Student::set_attendance(double attendance) {
 		this->attendance = attendance;
 	}
+	std::ostream& operator<<(std::ostream os, const Student& obj) {
+		return obj.print(os);
+	}
+
 
 	//					Constructors:
 	Student::Student(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS) :Human(HUMAN_GIVE_PARAMETERS) {
@@ -71,22 +78,8 @@
 		cout << "SDestructor:\t" << this << endl;
 	}
 
-	std::ostream& operator<<(std::ostream& os, const Human& obj) {
-		return os <<(Human&)obj << obj.get_last_name() << " " << obj.get_first_name() << " " << obj.get_age() << " лет" << endl;
-	}
-	std::ostream& operator<<(std::ostream& os, const Student& obj) {
-		return os << (Human&)obj << obj.get_last_name() << " " << obj.get_first_name() << " " << obj.get_age() << " лет" << endl;
-	}
-	std::ostream& operator<<(std::ostream& os, const Teacher& obj) {
-		return os << (Human&)obj << obj.get_last_name() << " " << obj.get_first_name() << " " << obj.get_age() << " лет" << endl;
-	}
-	std::ostream& operator<<(std::ostream& os, const Graduate& obj) {
-		return os << (Human&)obj << obj.get_last_name() << " " << obj.get_first_name() << " " << obj.get_age() << " лет" << endl;
-	}
-
-	void Student::print()const {
-		Human::print();
-		cout << speciality << " " << group << " " << rating << " " << attendance << endl;
+	std::ostream& Student::print(std::ostream& os) const {
+		return Human::print(os) << speciality << " " << group << " " << rating << " " << attendance;
 	}
 
 	const std::string& Teacher::get_speciality()const {
@@ -107,9 +100,11 @@
 		cout << "TConstructor:\t" << this << endl;
 	}
 
-	void Teacher::print()const {
-		Human::print();
-		cout << speciality << " " << experience << " years\n";
+	std::ostream& Teacher::print(std::ostream& os) const {
+		return Human::print(os) << speciality << " " << experience << " years";
+	}
+	std::ostream& operator<<(std::ostream os, const Teacher& obj) {
+		return obj.print(os);
 	}
 
 	const std::string& Graduate::get_subject()const {
@@ -119,6 +114,7 @@
 		this->subject = subject;
 	}
 
+
 	Graduate::Graduate(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS, const std::string& subject)
 		:Student(HUMAN_GIVE_PARAMETERS, STUDENT_GIVE_PARAMETERS) {
 		set_subject(subject);
@@ -127,11 +123,13 @@
 	Graduate::~Graduate() {
 		cout << "GDestructor:\t" << this << endl;
 	}
-	void Graduate::print()const {
-		Student::print();
-		cout << subject << endl;
-	}
 
+	std::ostream& Graduate::print(std::ostream& os) const {
+		return Student::print(os) << " " << subject;
+	}
+	std::ostream& operator<<(std::ostream os, const Graduate& obj) {
+		return obj.print(os);
+	}
 
 
 	void print(Human* group[], const int n) {
@@ -142,7 +140,7 @@
 			if (typeid(*group[i]) == typeid(Student)) cout << dynamic_cast<Student*>(group[i]) << endl;
 			if (typeid(*group[i]) == typeid(Graduate)) cout << dynamic_cast<Graduate*>(group[i]) << endl;
 			if (typeid(*group[i]) == typeid(Teacher)) cout << dynamic_cast<Teacher*>(group[i]) << endl;
-			cout << *group[i] << endl;
+			cout << group[i] << endl;
 			cout << delimiter << endl;
 		}
 	}
