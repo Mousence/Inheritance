@@ -30,11 +30,26 @@
 		cout << "HDestructor:\t" << this << endl;
 	}
 	std::ostream& Human::print(std::ostream& os) const {
-		return os << last_name << " " << first_name << " " << age << " y/o";
+		return os << last_name << " " << first_name << " " << age << " y/o ";
+	}
+	std::ofstream& Human::print(std::ofstream& ofs) const {
+		ofs.width(LAST_NAME_WIDTH);
+		ofs << std::left;
+		ofs << last_name;
+		ofs.width(FIRST_NAME_WIDTH);
+		ofs << std::left;
+		ofs << first_name;
+		ofs.width(AGE_WIDTH);
+		ofs << age;
+	  return ofs;
 	}
 
-	std::ostream& operator<<(std::ostream os, const Human& obj) {
+	std::ostream& operator<<(std::ostream& os, const Human& obj) {
 		return obj.print(os);
+	}
+	std::ofstream& operator<<(std::ofstream& ofs, const Human& obj) {
+		obj.print(ofs);
+		return ofs;
 	}
 	
 	const std::string& Student::get_speciality()const {
@@ -81,6 +96,18 @@
 	std::ostream& Student::print(std::ostream& os) const {
 		return Human::print(os) << speciality << " " << group << " " << rating << " " << attendance;
 	}
+	std::ofstream& Student::print(std::ofstream& ofs) const {
+		Human::print(ofs);
+		ofs.width(SPECIALITY_WIDTH);
+		ofs << speciality;
+		ofs.width(GROUP_WIDTH);
+		ofs << group;
+		ofs.width(RATING_WIDTH);
+		ofs << rating;
+		ofs.width(ATTANDANCE_WIDTH);
+		ofs << attendance;
+		return ofs;
+	}
 
 	const std::string& Teacher::get_speciality()const {
 		return speciality;
@@ -102,6 +129,14 @@
 
 	std::ostream& Teacher::print(std::ostream& os) const {
 		return Human::print(os) << speciality << " " << experience << " years";
+	}
+	std::ofstream& Teacher::print(std::ofstream& ofs) const {
+		Human::print(ofs);
+	    ofs.width(SPECIALITY_WIDTH);
+		ofs << speciality;
+		ofs.width(EXPERIENCE_WIDTH);
+		ofs << experience;
+		return ofs;
 	}
 	std::ostream& operator<<(std::ostream& os, const Teacher& obj) {
 		return obj.print(os);
@@ -126,6 +161,10 @@
 
 	std::ostream& Graduate::print(std::ostream& os) const {
 		return Student::print(os) << " " << subject;
+	}
+	std::ofstream& Graduate::print(std::ofstream& ofs) const {
+		Human::print(ofs) << " " << subject;
+		return ofs;
 	}
 	std::ostream& operator<<(std::ostream& os, const Graduate& obj) {
 		return obj.print(os);

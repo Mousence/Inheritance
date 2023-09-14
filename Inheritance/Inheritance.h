@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+#include<fstream>
 #include<string>
 using namespace std;
 
@@ -7,7 +8,11 @@ using namespace std;
 
 #define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, int age
 #define HUMAN_GIVE_PARAMETERS last_name, first_name, age
+
 class Human {
+	static const int LAST_NAME_WIDTH = 15; //статические члены класса
+	static const int FIRST_NAME_WIDTH = 15;
+	static const int AGE_WIDTH = 3;
 	std::string last_name;
 	std::string first_name;
 	int age;
@@ -22,15 +27,20 @@ public:
 	//					Constructors:
 	Human(HUMAN_TAKE_PARAMETERS);
 	virtual ~Human();
-
 	virtual std::ostream& print(std::ostream& os)const;
+	virtual std::ofstream& print(std::ofstream& ofs)const;
 };
-std::ostream& operator<<(std::ostream os, const Human& obj);
+std::ostream& operator<<(std::ostream& os, const Human& obj);
+std::ofstream& operator<<(std::ofstream& ofs, const Human& obj);
 
 #define STUDENT_TAKE_PARAMETERS	const std::string& speciality, const std::string& group, double rating, double attendance
 #define STUDENT_GIVE_PARAMETERS	speciality, group, rating, attendance
 class Student :public Human
 {
+	static const int SPECIALITY_WIDTH = 25;
+	static const int GROUP_WIDTH = 8;
+	static const int RATING_WIDTH = 8;
+	static const int ATTANDANCE_WIDTH = 8;
 	std::string speciality;
 	std::string group;
 	double rating;
@@ -49,15 +59,17 @@ public:
 	Student(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS);
 	~Student();
 
-	virtual std::ostream& print(std::ostream& os) const;
+	virtual std::ostream& print(std::ostream& os) const override;
+	std::ofstream& print(std::ofstream& ofs) const override;
 };
 std::ostream& operator<<(std::ostream& os, const Student& obj);
-
 
 #define TEACHER_TAKE_PARAMETERS const std::string& speciality, int experience
 #define TEACHER_GIVE_PARAMETERS speciality, experience
 class Teacher :public Human
 {
+	static const int SPECIALITY_WIDTH = 25;
+	static const int EXPERIENCE_WIDTH = 3;
 	std::string speciality;
 	int experience;
 public:
@@ -67,7 +79,8 @@ public:
 	void set_experience(int experience);
 	Teacher(HUMAN_TAKE_PARAMETERS, TEACHER_TAKE_PARAMETERS);
 
-	virtual std::ostream& print(std::ostream& os) const;
+	virtual std::ostream& print(std::ostream& os) const override;
+	std::ofstream& print(std::ofstream& ofs) const override;
 };
 std::ostream& operator<<(std::ostream& os, const Teacher& obj);
 
@@ -81,7 +94,8 @@ public:
 
 	Graduate(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS, const std::string& subject);
 	~Graduate();
-	virtual std::ostream& print(std::ostream& os) const;
+	virtual std::ostream& print(std::ostream& os) const override;
+	std::ofstream& print(std::ofstream& ofs) const override;
 };
 std::ostream& operator<<(std::ostream& os, const Graduate& obj);
 
