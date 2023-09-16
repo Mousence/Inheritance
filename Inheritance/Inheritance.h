@@ -1,4 +1,5 @@
 #pragma once
+
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -87,6 +88,7 @@ std::ostream& operator<<(std::ostream& os, const Teacher& obj);
 
 class Graduate :public Student
 {
+	static const int SUBJECT_WIDTH = 50;
 	std::string subject;
 public:
 	const std::string& get_subject()const;

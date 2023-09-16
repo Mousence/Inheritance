@@ -163,7 +163,9 @@
 		return Student::print(os) << " " << subject;
 	}
 	std::ofstream& Graduate::print(std::ofstream& ofs) const {
-		Human::print(ofs) << " " << subject;
+		Student::print(ofs);
+		ofs.width(SUBJECT_WIDTH);
+		ofs << subject;
 		return ofs;
 	}
 	std::ostream& operator<<(std::ostream& os, const Graduate& obj) {
