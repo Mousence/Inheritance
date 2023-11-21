@@ -3,6 +3,7 @@
 #include <istream>
 #include <sstream>
 #include <ostream>
+#include <string>
 #include "Inheritance.h"
 
 using namespace std;
@@ -13,7 +14,9 @@ using namespace std;
 #define TEACHER_GET_PARAMETERS speciality >> experience
 void print(Human* group[], const int n);
 void save(Human* group[], const int n, const char sz_filename[]);
-void load(Human* group[], const int n, const char sz_filename[]);
+//void load(Human* group[], const int n, const char sz_filename[]);
+Human* human_factory(const std::string & type);
+Human** load(const char sz_filename[], int& n);
 
 //#define INHERITANCE_CHECK
 
@@ -32,11 +35,16 @@ void main()
 
 	Graduate graduate("Schrader", "Hank", 40, "Criminalistic", "OBN", 80, 70, "How to catch Heisenberg");
 	graduate.print();
-#endif // INHERITANCE_CHECK
 
 	Human* group[3];
 	load(group, sizeof(group) / sizeof(group[0]), "group.txt");
 	print(group, sizeof(group) / sizeof(group[0]));
+#endif // INHERITANCE_CHECK
+
+	int n = 0;
+	Human** group = load("group.txt", n);
+	print(group, n);
+
 }
 
 void save(Human* group[], const int n, const char sz_filename[]) {
@@ -52,6 +60,46 @@ void save(Human* group[], const int n, const char sz_filename[]) {
 	system(command.c_str());
 }
 
+Human* human_factory(const std::string& type) {
+	if (type.find("Student") != std::string::npos) return new Student("", "", 0, "", "", 0, 0);
+	if (type.find("Student") != std::string::npos) return new Graduate("", "", 0, "", "", 0, 0, "");
+	if (type.find("Student") != std::string::npos) return new Teacher("", "", 0, "", 0);
+	return nullptr;
+}
+Human** load(const char sz_filename[], int& n) {
+	n = 0;
+	Human** group = nullptr;
+	std::ifstream fin(sz_filename);
+	if (fin.is_open()) {
+		std::string buffer;
+		while (!fin.eof()) {
+			std::getline(fin, buffer);
+			if (buffer.empty())continue;
+			n++;
+		}
+		group = new Human * [n] {};
+
+		cout << "Position:\t" << fin.tellg() << endl;
+		fin.clear();
+		fin.seekg(0);
+		cout << "Position:\t" << fin.tellg() << endl;
+		for (int i = 0; i < n; i++) {
+			std::getline(fin, buffer, ':');
+			group[i] = human_factory(buffer);
+			if(group[i])
+				fin >> group[i];
+			//fin >> group[i];
+		}
+
+		fin.close();
+	}
+	else
+		std::cerr << "Error: File doesnt exist!" << endl;
+
+	return group;
+}
+
+/*
 void load(Human* C_group[], const int n, const char sz_filename[]) {
 	std::ifstream fin(sz_filename);
 	if (fin.is_open()) {
@@ -102,4 +150,4 @@ void load(Human* C_group[], const int n, const char sz_filename[]) {
 		std::cerr << "Error: File doesnt exist!" << endl;
 	}
 	fin.close();
-}
+} */

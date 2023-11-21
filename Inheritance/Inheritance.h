@@ -30,9 +30,13 @@ public:
 	virtual ~Human();
 	virtual std::ostream& print(std::ostream& os)const;
 	virtual std::ofstream& print(std::ofstream& ofs)const;
+
+	virtual std::ifstream& scan(std::ifstream& ifs);
 };
+
 std::ostream& operator<<(std::ostream& os, const Human& obj);
 std::ofstream& operator<<(std::ofstream& ofs, const Human& obj);
+std::ifstream& operator>>(std::ifstream& ifs, Human& obj);
 
 #define STUDENT_TAKE_PARAMETERS	const std::string& speciality, const std::string& group, double rating, double attendance
 #define STUDENT_GIVE_PARAMETERS	speciality, group, rating, attendance
@@ -60,8 +64,9 @@ public:
 	Student(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS);
 	~Student();
 
-	virtual std::ostream& print(std::ostream& os) const override;
+	std::ostream& print(std::ostream& os) const override;
 	std::ofstream& print(std::ofstream& ofs) const override;
+	std::ifstream& scan(std::ifstream& ifs);
 };
 std::ostream& operator<<(std::ostream& os, const Student& obj);
 
@@ -80,8 +85,9 @@ public:
 	void set_experience(int experience);
 	Teacher(HUMAN_TAKE_PARAMETERS, TEACHER_TAKE_PARAMETERS);
 
-	virtual std::ostream& print(std::ostream& os) const override;
+	std::ostream& print(std::ostream& os) const override;
 	std::ofstream& print(std::ofstream& ofs) const override;
+	std::ifstream& scan(std::ifstream& ifs)override;
 };
 std::ostream& operator<<(std::ostream& os, const Teacher& obj);
 
@@ -98,6 +104,7 @@ public:
 	~Graduate();
 	virtual std::ostream& print(std::ostream& os) const override;
 	std::ofstream& print(std::ofstream& ofs) const override;
+	std::ifstream& scan(std::ifstream& ifs) override;
 };
 std::ostream& operator<<(std::ostream& os, const Graduate& obj);
 
