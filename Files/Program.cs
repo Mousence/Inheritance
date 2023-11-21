@@ -33,12 +33,13 @@ namespace Files
             string cmd = directory + "\\" + FileName;
             System.Diagnostics.Process.Start("notepad", cmd); 
 #endif
-            StreamReader sr = new StreamReader("File.txt");
+            /*StreamReader sr = new StreamReader("File.txt");
             while (!sr.EndOfStream) { 
                 string buffer = sr.ReadLine();
                 Console.WriteLine(buffer);
             }
             sr.Close();
+        */
         }
     }
 }
