@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,9 @@ namespace AbstractClass
     {
         public double X { get; set; }
 
-        public Square(double x) {
+        public Square(double x, int start_x, int start_y, int line_width, Color color) 
+            : base( start_x,  start_y,  line_width, color) 
+        {
             X = x;
             Console.WriteLine("SConstructor:\t" + this.GetHashCode());
         }
@@ -24,7 +27,9 @@ namespace AbstractClass
         {
             return X * X;
         }
-        public void info() {
+        public override void draw()
+        { }
+            public void info() {
             Console.WriteLine("Длина стороны: " + X);
             base.info();
         }

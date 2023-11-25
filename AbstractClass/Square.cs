@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace AbstractClass
 {
-    class Car:Vehicle
+    class Square:Rectange
     {
-        public override void Move()
+        public Square(double x, int start_x, int start_y, int line_width, Color color) 
+            : base(x, x, start_x,  start_y,  line_width, color)
         {
-            Console.WriteLine("Машина едет");
         }
+        ~Square() {}
     }
 }
